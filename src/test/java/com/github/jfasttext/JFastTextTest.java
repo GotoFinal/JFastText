@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -101,8 +102,8 @@ public class JFastTextTest {
         try (InputStream is = new FileInputStream("src/test/resources/models/supervised.model.bin")) {
             JFastText jft = new JFastText(is);
             String word = "soccer";
-            List<Float> vec = jft.getVector(word);
-            System.out.printf("\nWord embedding vector of '%s': %s\n", word, vec);
+            float[] vec = jft.getArrayVector(word);
+            System.out.printf("\nWord embedding vector of '%s': %s\n", word, Arrays.toString(vec));
         }
     }
 
@@ -111,9 +112,9 @@ public class JFastTextTest {
         JFastText jft = new JFastText();
         jft.loadModel("src/test/resources/models/supervised.model.bin");
         String word = "soccers";
-        List<Float> vec = jft.getSentenceVector(word);
+        float[] vec = jft.getArraySentenceVector(word);
         int expectedSize = 100;
-        assertEquals(expectedSize, vec.size());
+        assertEquals(expectedSize, vec.length);
     }
 
     /**
